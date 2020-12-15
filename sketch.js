@@ -1,8 +1,10 @@
 //Create variables here
-var dog,happyDog,foodS,foodStock;
+var dog,happyDog;
 var database; 
 var dogImg;
 
+var foodStock;
+var foodS=0;
 
 function preload()
 {
@@ -33,20 +35,23 @@ function setup() {
 
 
 function draw() {  
-  
+  background(46,139,87);
   if(keyWentDown("UP_ARROW")){
     writeStock(foodS);
     dog.addImage(happyDog);
   }
 
+  console.log(foodS)
 
+  textSize(20)
+  fill("white")
+  stroke("black")
+  text("FoodStock: "+foodS,350,20)
 
   drawSprites();
   //add styles here
-  text("FoodStock: "+foodS,350,20)
-  textSize(10)
-  fill("white")
-  noStroke()
+
+
 }
 
 function readStock(data){
@@ -54,7 +59,13 @@ function readStock(data){
 }
 
 function writeStock(x){
-  database.ref('/').update({
+    if(x<=0){
+       x=0;
+       }
+       else{
+          x=x-1;
+       }
+    database.ref('/').update({
     Food:x
   })
 }
